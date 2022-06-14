@@ -1,0 +1,44 @@
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="form-group my-2">
+            <label for="title" class="form-label">Title</label>
+            <input [(ngModel)]="myCourse.title" type="text" name="" id="title" class="form-control">
+        </div>
+        <div class="form-group my-2">
+            <label for="content" class="form-label">Content</label>
+            <textarea [(ngModel)]="myCourse.content" name="" id="content" cols="30" rows="4" class="form-control"></textarea>
+        </div>
+        <div class="form-group my-2">
+            <label for="price" class="form-label">Price</label>
+            <input [(ngModel)]="myCourse.price" type="number" name="" id="price" class="form-control">
+        </div>
+        <div class="form-group my-2">
+            <label for="image" class="form-label">Image</label>
+            <input [(ngModel)]="myCourse.image" type="url" name="" id="image" class="form-control">
+        </div>
+        <button class="btn btn-success my-3">Add course</button>
+
+        {{ myCourse | json }}
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-4" *ngFor="let course of courses">
+        <div class="card mb-3">
+            <h3 class="card-header">{{ course.title }}</h3>
+            <div class="card-body">
+            </div>
+            <img [src]="course.image" [alt]="course.title" srcset="">
+            <div class="card-body">
+              <p class="card-text">{{ course.content }}</p>
+              <p><span class="badge bg-warning">$ {{ course.price }}</span></p>
+            </div>
+
+            <hr>
+            <button class="btn btn-sm btn-dark mr-2">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteCourse(course.id)">Delete</button>
+          </div>
+    </div>
+</div>

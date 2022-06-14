@@ -1,0 +1,16 @@
+<h1>{{ title }}</h1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, libero. Ipsa animi hic eius nam quos omnis quaerat harum soluta!</p>
+
+
+<input type="text" [(ngModel)]="name" (keyup.enter)="addName()">
+
+<ul>
+    <li *ngFor="let name of names">{{ name }}
+
+        <button class="btn btn-danger btn-sm">Delete</button>
+    </li>
+</ul>
+
+<hr>
+
+<img [src]="image" alt="" srcset="">
