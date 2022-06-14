@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -13,7 +14,10 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  myCourse = {
+  showForm = false
+
+  myCourse: any = {
+    id: "",
     title: "",
     content: "",
     image: "",
@@ -76,10 +80,24 @@ export class CoursesComponent implements OnInit {
       }
     })
 
-   
-      
-    
+  }
 
+
+  addCourse() {
+    this.myCourse = {
+      ...this.myCourse,
+      id: uuidv4()
+    }
+    this.courses = [this.myCourse, ...this.courses]
+  }
+
+  showFormAction() {
+    this.showForm = !this.showForm
+  }
+
+  editCourse(data: any) {
+    this.myCourse = data
+    this.showForm = true
   }
 
 }
