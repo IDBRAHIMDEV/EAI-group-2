@@ -10,7 +10,9 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { TableComponent } from './components/table/table.component';
 import { ListComponent } from './components/list/list.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
 import { CoursesComponent } from './components/courses/courses.component';
+import { PostsComponent } from './components/posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -23,10 +25,12 @@ import { CoursesComponent } from './components/courses/courses.component';
     TableComponent,
     ListComponent,
     CoursesComponent,
+    PostsComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
