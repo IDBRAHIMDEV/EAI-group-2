@@ -6,9 +6,24 @@ import { HttpClient } from '@angular/common/http'
 })
 export class PostService {
 
+  urlApi = "http://localhost:3000/posts"
+
   constructor(private http: HttpClient) { }
 
   getAllPosts() {
-    return this.http.get("https://jsonplaceholder.typicode.com/posts")
+    return this.http.get(this.urlApi)
   }
+
+  persistPost(data: any) {
+    return this.http.post(this.urlApi, data)
+  }
+
+  updatePost(data: any, id: number) {
+    return this.http.put(`${this.urlApi}/${id}`, data)
+  }
+
+  deletePost(id: number) {
+    return this.http.delete(`${this.urlApi}/${id}`)
+  }
+
 }

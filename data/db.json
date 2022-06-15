@@ -1,0 +1,11 @@
+{
+  "posts": [
+    {
+      "title": "Learn Vue 3",
+      "body": "learn vue 4",
+      "id": 2
+    }
+  ],
+  "users": [],
+  "courses": []
+}
