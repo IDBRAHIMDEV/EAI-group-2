@@ -9,16 +9,28 @@
 
 <div class="row my-5">
     <div class="col-md-6 mx-auto">
+
+        <form #postForm="ngForm" (submit)="addPost(postForm)">
         <div class="form-group">
             <label for="title" class="form-label">Title</label>
-            <input [(ngModel)]="myPost.title" type="text" name="" id="title" class="form-control">
+            <input #title="ngModel" required minlength="4" maxlength="30" pattern="[0-9A-Za-z ]*" (change)="info(title)" ngModel type="text" name="title" id="title" class="form-control">
+            <div class="alert alert-danger" *ngIf="title.invalid && (title.touched || title.dirty)">
+                <div *ngIf="title.errors?.['required']">This field is Required !</div>
+                <div *ngIf="title.errors?.['minlength']">This field should be great than {{ title.errors?.['minlength']['actualLength'] }} / {{ title.errors?.['minlength']['requiredLength'] }} caracters ! </div>
+                <div *ngIf="title.errors?.['maxlength']">This field should be less than {{ title.errors?.['maxlength'] }} </div>
+                <div *ngIf="title.errors?.['pattern']">This field has invalid pattern ! </div>
+            </div>
         </div>
         <div class="form-group mt-3">
             <label for="body" class="form-label">Body</label>
-            <textarea [(ngModel)]="myPost.body" name="" id="body" cols="30" rows="4" class="form-control"></textarea>
+            <textarea required #body="ngModel" ngModel name="body" id="body" cols="30" rows="4" class="form-control"></textarea>
+            <div class="alert alert-danger" *ngIf="body.invalid && (body.touched || body.dirty)">
+                <div *ngIf="body.errors?.['required']">This field is Required !</div>
+            </div>
         </div>
-        <button *ngIf="edit" class="btn btn-warning my-5" (click)="updateOnePost()">Update post</button>
-        <button *ngIf="!edit" class="btn btn-success my-5" (click)="addPost()">Add post</button>
+        <button *ngIf="edit" class="btn btn-warning my-5" >Update post</button>
+        <button [disabled]="postForm.invalid" *ngIf="!edit" class="btn btn-success my-5" >Add post</button>
+    </form>    
     </div>
 </div>
 
@@ -33,47 +45,40 @@
     </div>
 </div>
 
-<div *ngIf="status == 'table' and listPosts.length > 0" class="row my-5" >
-    <div class="row my-2">
-        <div class="col-md-12">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Title</th>
-                        <th>Body</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let post of listPosts">
-                        <td>{{ post.id }}</td>
-                        <td>{{ post.title }}</td>
-                        <td>{{ post.body }}</td>
-                        <td>
-                            <button (click)="editPost(post)" class="btn btn-sm btn-warning mr-2">Edit</button>
-                            <button (click)="destroyPost(post.id)" class="btn btn-sm btn-danger">delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<div *ngIf="status == 'table'; then myTable else myCard" class="row my-5" ></div>
 
-<div *ngIf="status == 'card'" class="row my-5">
-    <div class="col-md-4" *ngFor="let post of listPosts">
-        <div class="card">
-            
-            <div class="card-body">
-                <h4 class="card-title">{{ post.title }}</h4>
-                <p class="card-text">{{ post.body }}</p>
-                <hr>
-                <div>
-                    <button (click)="editPost(post)" class="btn btn-sm btn-warning mr-2">Edit</button>
-                    <button (click)="destroyPost(post.id)" class="btn btn-sm btn-danger">delete</button>
-                </div>
-            </div>
+
+<ng-template #myTable class="row my-2">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Title</th>
+                    <th>Body</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let post of listPosts">
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.body }}</td>
+                    <td>
+                        <button (click)="editPost(post)" class="btn btn-sm btn-warning mr-2">Edit</button>
+                        <button (click)="destroyPost(post.id)" class="btn btn-sm btn-danger">delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+
+
+<ng-template #myCard>
+    <div class="row my-5">
+        <div class="col-md-4" *ngFor="let post of listPosts">
+           <app-card [post]="post" (delete)="listenSignal($event)"></app-card>
         </div>
     </div>
-</div>
+</ng-template>

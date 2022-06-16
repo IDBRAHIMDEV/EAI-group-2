@@ -22,7 +22,7 @@ export class PostService {
     return this.http.put(`${this.urlApi}/${id}`, data)
   }
 
-  deletePost(id: number) {
+  deletePost(id: number | undefined) {
     return this.http.delete(`${this.urlApi}/${id}`)
   }
 

@@ -11,30 +11,38 @@
 
 <div class="row" *ngIf="showForm">
     <div class="col-md-6 mx-auto">
+
+        <form [formGroup]="courseForm" (submit)="addCourse()">
         <div class="form-group my-2">
             <label for="title" class="form-label">Title</label>
-            <input [(ngModel)]="myCourse.title" type="text" name="" id="title" class="form-control">
+            <input formControlName="title" type="text" id="title" class="form-control">
+            <div class="alert alert-danger" *ngIf="courseForm.get('title')?.invalid && (courseForm.get('title')?.touched || courseForm.get('title')?.dirty)">
+                <div *ngIf="courseForm.get('title')?.errors?.['required']">This field is Required</div>
+                <div *ngIf="courseForm.get('title')?.errors?.['minlength']">
+                    This field should be great than {{ courseForm.get('title')?.errors?.['minlength']['actualLength'] }} / {{ courseForm.get('title')?.errors?.['minlength']['requiredLength'] }}
+                </div>
+            </div>
         </div>
         <div class="form-group my-2">
             <label for="content" class="form-label">Content</label>
-            <textarea [(ngModel)]="myCourse.content" name="" id="content" cols="30" rows="4" class="form-control"></textarea>
+            <textarea formControlName="content" id="content" cols="30" rows="4" class="form-control"></textarea>
         </div>
         <div class="form-group my-2">
             <label for="price" class="form-label">Price</label>
-            <input [(ngModel)]="myCourse.price" type="number" name="" id="price" class="form-control">
+            <input formControlName="price" type="number" id="price" class="form-control">
         </div>
         <div class="form-group my-2">
             <label for="image" class="form-label">Image</label>
-            <input [(ngModel)]="myCourse.image" type="url" name="" id="image" class="form-control">
+            <input formControlName="image" type="url" id="image" class="form-control">
         </div>
-        <button class="btn btn-success my-3" (click)="addCourse()">Add course</button>
-
+        <button [disabled]="courseForm.invalid" class="btn btn-success my-3">Add course</button>
+    </form>
     </div>
 </div>
 
 
 <div class="row">
-    <div class="col-md-4" *ngFor="let course of courses">
+    <div class="col-md-6 col-lg-4 col-sm-12" *ngFor="let course of courses">
         <div class="card mb-3">
             <h3 class="card-header">{{ course.title }}</h3>
             <div class="card-body">

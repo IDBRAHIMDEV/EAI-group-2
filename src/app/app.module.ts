@@ -9,10 +9,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { TableComponent } from './components/table/table.component';
 import { ListComponent } from './components/list/list.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { CoursesComponent } from './components/courses/courses.component';
 import { PostsComponent } from './components/posts/posts.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +27,12 @@ import { PostsComponent } from './components/posts/posts.component';
     ListComponent,
     CoursesComponent,
     PostsComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],

@@ -1,3 +1,4 @@
+import { Post } from './../../models/post';
 import { PostService } from './../../services/post.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -33,8 +34,15 @@ export class PostsComponent implements OnInit {
     })
   }
 
-  addPost() {
-    this.postService.persistPost(this.myPost).subscribe((data: any) => this.listPosts = [data, ...this.listPosts])
+  addPost(myForm: any) {
+
+    if(myForm.invalid) {
+      alert('Please check the data in your form !')
+      return
+    }
+
+    console.log(myForm)
+    this.postService.persistPost(myForm.value).subscribe((data: any) => this.listPosts = [data, ...this.listPosts])
   }
 
 
@@ -59,12 +67,22 @@ export class PostsComponent implements OnInit {
     })
   }
 
-  destroyPost(id: number) {
+  destroyPost(id: number | undefined) {
+    
     this.postService.deletePost(id).subscribe(() => this.listPosts = this.listPosts.filter((post: any) => post.id !== id))
   }
 
   changeStatus(status: string) {
     this.status = status
   }
+
+  listenSignal(data: Post) {
+    this.destroyPost(data.id)
+  }
+
+  
+  info(data: any) {
+    console.log(data)
+  } 
 
 }

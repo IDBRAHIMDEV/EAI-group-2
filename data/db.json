@@ -1,9 +1,9 @@
 {
   "posts": [
     {
-      "title": "Learn Vue 3",
-      "body": "learn vue 4",
-      "id": 2
+      "title": "Learn Angular from Scratch",
+      "body": "learn how to develop the frontend apps with angular CLI",
+      "id": 1
     }
   ],
   "users": [],

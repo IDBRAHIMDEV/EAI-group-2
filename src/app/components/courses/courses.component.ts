@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-courses',
@@ -8,6 +9,13 @@ import Swal from 'sweetalert2'
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
+
+  courseForm = new FormGroup({
+    title: new FormControl("", [Validators.required, Validators.minLength(3)]),
+    price: new FormControl(),
+    content: new FormControl(),
+    image: new FormControl()
+  })
 
   constructor() { }
 
@@ -84,11 +92,19 @@ export class CoursesComponent implements OnInit {
 
 
   addCourse() {
-    this.myCourse = {
-      ...this.myCourse,
-      id: uuidv4()
+
+    console.log(this.courseForm.value)
+    let { title, content, price, image } = this.courseForm.value
+
+    let data: any = {
+      id: uuidv4(),
+      title,
+      content,
+      price,
+      image
     }
-    this.courses = [this.myCourse, ...this.courses]
+
+    this.courses = [data, ...this.courses]
   }
 
   showFormAction() {
@@ -99,5 +115,6 @@ export class CoursesComponent implements OnInit {
     this.myCourse = data
     this.showForm = true
   }
+
 
 }
